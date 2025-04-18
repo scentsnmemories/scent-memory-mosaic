@@ -1,14 +1,15 @@
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Heart, ShoppingBag, User, Menu, X, LogOut } from "lucide-react";
+import { Heart, ShoppingBag, User, Menu, X, LogOut, Loader2 } from "lucide-react";
 import { useApp } from "../../context/AppContext";
 import { Button } from "../ui/button";
 import { toast } from "../ui/sonner";
 
 const Header: React.FC = () => {
-  const { getCartItemCount, signOut, isAuthenticated } = useApp();
+  const { getCartItemCount, signOut, isAuthenticated, loading } = useApp();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -16,11 +17,15 @@ const Header: React.FC = () => {
   };
 
   const handleSignOut = async () => {
+    setIsLoggingOut(true);
     const { error } = await signOut();
+    setIsLoggingOut(false);
+    
     if (error) {
       toast.error('Sign out failed', { description: error.message });
       return;
     }
+    
     toast.success('Logged out successfully');
     navigate('/');
   };
@@ -58,10 +63,26 @@ const Header: React.FC = () => {
               </span>
             )}
           </Link>
-          {isAuthenticated() ? (
-            <Button variant="outline" size="sm" className="rounded-full" onClick={handleSignOut}>
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
+          {loading ? (
+            <Button variant="outline" size="sm" className="rounded-full" disabled>
+              <Loader2 className="w-4 h-4 animate-spin" />
+            </Button>
+          ) : isAuthenticated() ? (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="rounded-full" 
+              onClick={handleSignOut}
+              disabled={isLoggingOut}
+            >
+              {isLoggingOut ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Logout
+                </>
+              )}
             </Button>
           ) : (
             <Link to="/login">
@@ -128,16 +149,26 @@ const Header: React.FC = () => {
                 <Heart className="w-5 h-5 mr-3 text-luxury-purple" />
                 Favorites
               </Link>
-              {isAuthenticated() ? (
+              {loading ? (
+                <div className="flex items-center py-2 px-4">
+                  <Loader2 className="w-5 h-5 mr-3 animate-spin text-luxury-purple" />
+                  Loading...
+                </div>
+              ) : isAuthenticated() ? (
                 <button
                   onClick={() => {
                     handleSignOut();
                     setIsMenuOpen(false);
                   }}
                   className="flex items-center py-2 px-4 w-full text-left hover:bg-luxury-muted/10 rounded-md"
+                  disabled={isLoggingOut}
                 >
-                  <LogOut className="w-5 h-5 mr-3 text-luxury-purple" />
-                  Logout
+                  {isLoggingOut ? (
+                    <Loader2 className="w-5 h-5 mr-3 animate-spin text-luxury-purple" />
+                  ) : (
+                    <LogOut className="w-5 h-5 mr-3 text-luxury-purple" />
+                  )}
+                  {isLoggingOut ? 'Logging out...' : 'Logout'}
                 </button>
               ) : (
                 <Link
