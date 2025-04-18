@@ -1,5 +1,6 @@
 
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 export default {
 	darkMode: ["class"],
@@ -126,8 +127,36 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'fade-out': 'fade-out 0.3s ease-out',
-			}
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						maxWidth: 'none',
+						color: 'inherit',
+						a: {
+							color: 'inherit',
+							textDecoration: 'none',
+							fontWeight: '500',
+						},
+						h1: {
+							fontFamily: '"Playfair Display", serif',
+						},
+						h2: {
+							fontFamily: '"Playfair Display", serif',
+						},
+						h3: {
+							fontFamily: '"Playfair Display", serif',
+						},
+						h4: {
+							fontFamily: '"Playfair Display", serif',
+						},
+					},
+				},
+			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		typography,
+	],
 } satisfies Config;
