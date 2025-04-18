@@ -37,6 +37,7 @@ const AuthPage: React.FC = () => {
         if (error) {
           console.error('Login error:', error);
           toast.error('Login failed', { description: error.message || 'Please check your credentials and try again' });
+          setIsSubmitting(false);
           return;
         }
         toast.success('Logged in successfully');
@@ -52,17 +53,18 @@ const AuthPage: React.FC = () => {
         if (error) {
           console.error('Registration error:', error);
           toast.error('Sign up failed', { description: error.message || 'Please check your information and try again' });
+          setIsSubmitting(false);
           return;
         }
         toast.success('Account created successfully', { 
           description: 'Please check your email for verification instructions.' 
         });
         // Stay on page after signup to allow user to login
+        setIsSubmitting(false);
       }
     } catch (error) {
       console.error('Authentication error', error);
       toast.error('An unexpected error occurred');
-    } finally {
       setIsSubmitting(false);
     }
   };

@@ -38,12 +38,12 @@ export interface CartItem {
 
 export interface User {
   id: string;
-  name: string;
   email: string;
-  preferences: UserPreferences;
-  favorites: string[];
-  cart: CartItem[];
-  completedQuiz: boolean;
+  fullName?: string;
+  preferences?: UserPreferences;
+  favorites?: string[];
+  cart?: CartItem[];
+  completedQuiz?: boolean;
   quizResults?: {
     recommendedScentFamilies: string[];
     personalityType: string;
