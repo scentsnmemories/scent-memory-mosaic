@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -7,7 +6,7 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { toast } from '../components/ui/sonner';
 import Layout from '../components/layout/Layout';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Eye, EyeOff } from 'lucide-react';
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -15,10 +14,10 @@ const AuthPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { signIn, signUp, isAuthenticated, loading } = useApp();
   const navigate = useNavigate();
 
-  // Redirect if user is already authenticated
   useEffect(() => {
     if (isAuthenticated() && !loading) {
       navigate('/');
@@ -59,7 +58,6 @@ const AuthPage: React.FC = () => {
         toast.success('Account created successfully', { 
           description: 'Please check your email for verification instructions.' 
         });
-        // Stay on page after signup to allow user to login
         setIsSubmitting(false);
       }
     } catch (error) {
@@ -67,6 +65,10 @@ const AuthPage: React.FC = () => {
       toast.error('An unexpected error occurred');
       setIsSubmitting(false);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   if (loading) {
@@ -114,17 +116,33 @@ const AuthPage: React.FC = () => {
               />
             </div>
             
-            <div className="space-y-2">
+            <div className="space-y-2 relative">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-                disabled={isSubmitting}
-              />
+              <div className="flex items-center">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  disabled={isSubmitting}
+                  className="pr-10"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-1 top-1/2 -translate-y-1/2"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5 text-gray-500" />
+                  ) : (
+                    <Eye className="h-5 w-5 text-gray-500" />
+                  )}
+                </Button>
+              </div>
             </div>
             
             <Button 
