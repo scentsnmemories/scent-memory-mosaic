@@ -158,9 +158,11 @@ const CartPage: React.FC = () => {
                     </div>
                   </div>
                   
-                  <Button className="w-full bg-luxury-purple hover:bg-luxury-purple/90 mb-4">
-                    Proceed to Checkout
-                  </Button>
+                  <Link to="/checkout">
+                    <Button className="w-full bg-luxury-purple hover:bg-luxury-purple/90 mb-4">
+                      Proceed to Checkout
+                    </Button>
+                  </Link>
                   
                   <div className="text-sm text-center text-luxury-muted">
                     <p>Taxes and shipping calculated at checkout</p>
