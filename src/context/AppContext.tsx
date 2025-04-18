@@ -1,7 +1,7 @@
-
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { User, Perfume, CartItem } from "../types";
 import { perfumes } from "../data/perfumes";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AppContextProps {
   user: User | null;
@@ -19,6 +19,9 @@ interface AppContextProps {
   getCartItemCount: () => number;
   getCartTotal: () => number;
   isAuthenticated: () => boolean;
+  signUp: (email: string, password: string, fullName?: string) => Promise<{ error: any }>;
+  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signOut: () => Promise<{ error: any }>;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -101,6 +104,34 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return user !== null;
   };
 
+  const signUp = async (email: string, password: string, fullName?: string) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName
+        }
+      }
+    });
+    
+    return { error };
+  };
+
+  const signIn = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+    
+    return { error };
+  };
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    return { error };
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -119,6 +150,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         getCartItemCount,
         getCartTotal,
         isAuthenticated,
+        signUp,
+        signIn,
+        signOut,
       }}
     >
       {children}

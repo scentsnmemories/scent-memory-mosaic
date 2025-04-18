@@ -16,6 +16,7 @@ import QuizPage from "./pages/QuizPage";
 import QuizResultsPage from "./pages/QuizResultsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import NotFound from "./pages/NotFound";
+import AuthPage from "./pages/AuthPage";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/perfume/:id" element={<PerfumeDetailPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/login" element={<AuthPage />} />
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/quiz" element={<QuizPage />} />
             <Route path="/quiz/results" element={<QuizResultsPage />} />

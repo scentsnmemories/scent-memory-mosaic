@@ -1,16 +1,23 @@
-
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Heart, ShoppingBag, User, Menu, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Heart, ShoppingBag, User, Menu, X, LogOut } from "lucide-react";
 import { useApp } from "../../context/AppContext";
 import { Button } from "../ui/button";
+import { toast } from "../ui/sonner";
 
 const Header: React.FC = () => {
-  const { getCartItemCount, isAuthenticated } = useApp();
+  const { getCartItemCount, signOut } = useApp();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const handleSignOut = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast.error('Sign out failed', { description: error.message });
+      return;
+    }
+    toast.success('Logged out successfully');
+    navigate('/');
   };
 
   return (
@@ -22,7 +29,6 @@ const Header: React.FC = () => {
           </h1>
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           <Link to="/catalog" className="nav-link">
             Shop
@@ -35,7 +41,6 @@ const Header: React.FC = () => {
           </Link>
         </nav>
 
-        {/* Desktop Actions */}
         <div className="hidden md:flex items-center space-x-4">
           <Link to="/favorites" className="p-2 rounded-full hover:bg-luxury-muted/10">
             <Heart className="w-6 h-6 text-luxury-purple" />
@@ -48,15 +53,14 @@ const Header: React.FC = () => {
               </span>
             )}
           </Link>
-          <Link to={isAuthenticated() ? "/profile" : "/login"}>
+          <Link to="/login">
             <Button variant="outline" size="sm" className="rounded-full">
               <User className="w-4 h-4 mr-2" />
-              {isAuthenticated() ? "Profile" : "Login"}
+              Login
             </Button>
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
           <Link to="/cart" className="p-2 mr-2 rounded-full hover:bg-luxury-muted/10 relative">
             <ShoppingBag className="w-6 h-6 text-luxury-purple" />
@@ -79,7 +83,6 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white shadow-md">
           <div className="luxury-container py-4 flex flex-col space-y-4">
@@ -114,12 +117,12 @@ const Header: React.FC = () => {
                 Favorites
               </Link>
               <Link
-                to={isAuthenticated() ? "/profile" : "/login"}
+                to="/login"
                 className="flex items-center py-2 px-4 hover:bg-luxury-muted/10 rounded-md"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <User className="w-5 h-5 mr-3 text-luxury-purple" />
-                {isAuthenticated() ? "My Profile" : "Login / Register"}
+                Login / Register
               </Link>
             </div>
           </div>
