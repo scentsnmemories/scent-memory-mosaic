@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Heart, ShoppingBag, User, Menu, X, LogOut } from "lucide-react";
@@ -6,9 +7,13 @@ import { Button } from "../ui/button";
 import { toast } from "../ui/sonner";
 
 const Header: React.FC = () => {
-  const { getCartItemCount, signOut } = useApp();
+  const { getCartItemCount, signOut, isAuthenticated } = useApp();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   const handleSignOut = async () => {
     const { error } = await signOut();
@@ -53,12 +58,19 @@ const Header: React.FC = () => {
               </span>
             )}
           </Link>
-          <Link to="/login">
-            <Button variant="outline" size="sm" className="rounded-full">
-              <User className="w-4 h-4 mr-2" />
-              Login
+          {isAuthenticated() ? (
+            <Button variant="outline" size="sm" className="rounded-full" onClick={handleSignOut}>
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
             </Button>
-          </Link>
+          ) : (
+            <Link to="/login">
+              <Button variant="outline" size="sm" className="rounded-full">
+                <User className="w-4 h-4 mr-2" />
+                Login
+              </Button>
+            </Link>
+          )}
         </div>
 
         <div className="md:hidden flex items-center">
@@ -116,14 +128,27 @@ const Header: React.FC = () => {
                 <Heart className="w-5 h-5 mr-3 text-luxury-purple" />
                 Favorites
               </Link>
-              <Link
-                to="/login"
-                className="flex items-center py-2 px-4 hover:bg-luxury-muted/10 rounded-md"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <User className="w-5 h-5 mr-3 text-luxury-purple" />
-                Login / Register
-              </Link>
+              {isAuthenticated() ? (
+                <button
+                  onClick={() => {
+                    handleSignOut();
+                    setIsMenuOpen(false);
+                  }}
+                  className="flex items-center py-2 px-4 w-full text-left hover:bg-luxury-muted/10 rounded-md"
+                >
+                  <LogOut className="w-5 h-5 mr-3 text-luxury-purple" />
+                  Logout
+                </button>
+              ) : (
+                <Link
+                  to="/login"
+                  className="flex items-center py-2 px-4 hover:bg-luxury-muted/10 rounded-md"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <User className="w-5 h-5 mr-3 text-luxury-purple" />
+                  Login / Register
+                </Link>
+              )}
             </div>
           </div>
         </div>
