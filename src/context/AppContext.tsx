@@ -35,7 +35,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
+        console.log("Auth state changed:", event, session?.user?.id);
         if (session?.user) {
           setUser({
             id: session.user.id,
@@ -51,6 +52,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const initializeAuth = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
+        console.log("Initial session check:", session?.user?.id);
         
         if (session?.user) {
           setUser({
@@ -148,6 +150,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const signUp = async (email: string, password: string, fullName?: string) => {
     try {
+      console.log("Signing up with:", { email, fullName });
       setLoading(true);
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -159,6 +162,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         }
       });
       
+      console.log("Sign up response:", { data, error });
       return { error };
     } catch (error) {
       console.error('Error during sign up:', error);
@@ -170,12 +174,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const signIn = async (email: string, password: string) => {
     try {
+      console.log("Signing in with:", { email });
       setLoading(true);
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
       
+      console.log("Sign in response:", { user: data?.user, error });
       return { error };
     } catch (error) {
       console.error('Error during sign in:', error);

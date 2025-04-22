@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
@@ -32,9 +33,10 @@ const AuthPage: React.FC = () => {
     
     try {
       if (isLogin) {
+        console.log('Attempting login with:', { email });
         const { error } = await signIn(email, password);
         if (error) {
-          console.error('Login error:', error);
+          console.error('Login error details:', error);
           toast.error('Login failed', { description: error.message || 'Please check your credentials and try again' });
           setIsSubmitting(false);
           return;
