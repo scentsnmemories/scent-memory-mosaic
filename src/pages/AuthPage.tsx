@@ -7,7 +7,7 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { toast } from '../components/ui/sonner';
 import Layout from '../components/layout/Layout';
-import { Loader2, Eye, EyeOff } from 'lucide-react';
+import { Loader2, Eye, EyeOff, WifiOff } from 'lucide-react';
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -16,6 +16,7 @@ const AuthPage: React.FC = () => {
   const [fullName, setFullName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [networkError, setNetworkError] = useState(false);
   const { signIn, signUp, isAuthenticated, loading } = useApp();
   const navigate = useNavigate();
 
@@ -30,6 +31,7 @@ const AuthPage: React.FC = () => {
     
     if (isSubmitting) return;
     setIsSubmitting(true);
+    setNetworkError(false);
     
     try {
       if (isLogin) {
@@ -37,7 +39,17 @@ const AuthPage: React.FC = () => {
         const { error } = await signIn(email, password);
         if (error) {
           console.error('Login error details:', error);
-          toast.error('Login failed', { description: error.message || 'Please check your credentials and try again' });
+          
+          // Check if it's a network-related error
+          if (error.message === 'Failed to fetch') {
+            setNetworkError(true);
+            toast.error('Network connection error', { 
+              description: 'Unable to connect to the authentication service. Please check your internet connection and try again.'
+            });
+          } else {
+            toast.error('Login failed', { description: error.message || 'Please check your credentials and try again' });
+          }
+          
           setIsSubmitting(false);
           return;
         }
@@ -53,7 +65,17 @@ const AuthPage: React.FC = () => {
         const { error } = await signUp(email, password, fullName);
         if (error) {
           console.error('Registration error:', error);
-          toast.error('Sign up failed', { description: error.message || 'Please check your information and try again' });
+          
+          // Check if it's a network-related error
+          if (error.message === 'Failed to fetch') {
+            setNetworkError(true);
+            toast.error('Network connection error', { 
+              description: 'Unable to connect to the authentication service. Please check your internet connection and try again.'
+            });
+          } else {
+            toast.error('Sign up failed', { description: error.message || 'Please check your information and try again' });
+          }
+          
           setIsSubmitting(false);
           return;
         }
@@ -90,6 +112,26 @@ const AuthPage: React.FC = () => {
           <h2 className="text-3xl font-bold text-center mb-8 text-luxury-purple">
             {isLogin ? 'Login' : 'Create Account'}
           </h2>
+          
+          {networkError && (
+            <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
+              <div className="flex items-center">
+                <WifiOff className="h-5 w-5 text-red-500 mr-2" />
+                <h3 className="text-red-800 font-medium">Connection Error</h3>
+              </div>
+              <p className="text-red-700 mt-1 text-sm">
+                Unable to connect to the authentication service. This could be due to:
+              </p>
+              <ul className="list-disc ml-5 mt-1 text-sm text-red-700">
+                <li>Internet connection issues</li>
+                <li>Firewall or network restrictions</li>
+                <li>Temporary service outage</li>
+              </ul>
+              <p className="text-red-700 mt-2 text-sm">
+                Please check your connection and try again.
+              </p>
+            </div>
+          )}
           
           <form onSubmit={handleSubmit} className="space-y-6">
             {!isLogin && (
