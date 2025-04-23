@@ -1,4 +1,3 @@
-
 import { Perfume, ScentFamily } from "../types";
 
 export const scentFamilies: ScentFamily[] = [
@@ -197,6 +196,174 @@ export const perfumes: Perfume[] = [
     inStock: true,
     isNew: false,
     isBestseller: true
+  },
+  {
+    id: "p9",
+    name: "Bold Devotion",
+    brand: "Luxury Scents",
+    price: 1550,
+    description: "A passionate oriental fragrance that captures the essence of unwavering devotion. Rich amber and exotic spices blend with deep vanilla and precious woods.",
+    scentFamily: "oriental",
+    notes: [
+      { name: "Saffron", type: "top" },
+      { name: "Pink Pepper", type: "top" },
+      { name: "Rose", type: "heart" },
+      { name: "Amber", type: "heart" },
+      { name: "Vanilla", type: "base" },
+      { name: "Oud", type: "base" }
+    ],
+    imageUrl: "/placeholder.svg",
+    size: "100ml",
+    inStock: true,
+    isNew: true,
+    isBestseller: false
+  },
+  {
+    id: "p10",
+    name: "Butterfly Kiss",
+    brand: "Luxury Scents",
+    price: 1550,
+    description: "A delicate floral fragrance as light as a butterfly's touch. Blends tender petals of jasmine and lily of the valley with a hint of sweet nectar.",
+    scentFamily: "floral",
+    notes: [
+      { name: "Bergamot", type: "top" },
+      { name: "Peach Blossom", type: "top" },
+      { name: "Jasmine", type: "heart" },
+      { name: "Lily of the Valley", type: "heart" },
+      { name: "White Musk", type: "base" },
+      { name: "Honey", type: "base" }
+    ],
+    imageUrl: "/placeholder.svg",
+    size: "100ml",
+    inStock: true,
+    isNew: true,
+    isBestseller: false
+  },
+  {
+    id: "p11",
+    name: "Ramoz-e-Ishaq",
+    brand: "Luxury Scents",
+    price: 1550,
+    description: "A mysterious oriental blend that unveils the secrets of love. Rich spices and precious resins create an enigmatic and captivating aroma.",
+    scentFamily: "oriental",
+    notes: [
+      { name: "Cardamom", type: "top" },
+      { name: "Black Pepper", type: "top" },
+      { name: "Rose Absolute", type: "heart" },
+      { name: "Agarwood", type: "heart" },
+      { name: "Amber", type: "base" },
+      { name: "Musk", type: "base" }
+    ],
+    imageUrl: "/placeholder.svg",
+    size: "100ml",
+    inStock: true,
+    isNew: true,
+    isBestseller: false
+  },
+  {
+    id: "p12",
+    name: "Passion Amber",
+    brand: "Luxury Scents",
+    price: 1550,
+    description: "An intense oriental fragrance where passionate amber meets exotic spices. A warm and sensual blend that leaves an unforgettable impression.",
+    scentFamily: "oriental",
+    notes: [
+      { name: "Bergamot", type: "top" },
+      { name: "Cinnamon", type: "top" },
+      { name: "Amber", type: "heart" },
+      { name: "Rose", type: "heart" },
+      { name: "Vanilla", type: "base" },
+      { name: "Patchouli", type: "base" }
+    ],
+    imageUrl: "/placeholder.svg",
+    size: "100ml",
+    inStock: true,
+    isNew: true,
+    isBestseller: false
+  },
+  {
+    id: "p13",
+    name: "Broke My Heart",
+    brand: "Luxury Scents",
+    price: 1550,
+    description: "A bittersweet symphony of dark roses and smoky incense. This profound oriental fragrance captures the essence of intense emotions.",
+    scentFamily: "oriental",
+    notes: [
+      { name: "Black Rose", type: "top" },
+      { name: "Red Berries", type: "top" },
+      { name: "Dark Vanilla", type: "heart" },
+      { name: "Incense", type: "heart" },
+      { name: "Leather", type: "base" },
+      { name: "Musk", type: "base" }
+    ],
+    imageUrl: "/placeholder.svg",
+    size: "100ml",
+    inStock: true,
+    isNew: true,
+    isBestseller: false
+  },
+  {
+    id: "p14",
+    name: "Mazi",
+    brand: "Luxury Scents",
+    price: 1550,
+    description: "A nostalgic oriental fragrance that captures memories of the past. Sweet vanilla and precious woods create a comforting and lasting impression.",
+    scentFamily: "oriental",
+    notes: [
+      { name: "Sweet Orange", type: "top" },
+      { name: "Almond", type: "top" },
+      { name: "Vanilla Pod", type: "heart" },
+      { name: "Cedarwood", type: "heart" },
+      { name: "Sandalwood", type: "base" },
+      { name: "Amber", type: "base" }
+    ],
+    imageUrl: "/placeholder.svg",
+    size: "100ml",
+    inStock: true,
+    isNew: true,
+    isBestseller: false
+  },
+  {
+    id: "p15",
+    name: "Wild Affection",
+    brand: "Luxury Scents",
+    price: 1550,
+    description: "An untamed floral fragrance that speaks of passionate love. Wild roses and exotic flowers blend with warm woods and musk.",
+    scentFamily: "floral",
+    notes: [
+      { name: "Wild Rose", type: "top" },
+      { name: "Pink Pepper", type: "top" },
+      { name: "Jasmine", type: "heart" },
+      { name: "Orchid", type: "heart" },
+      { name: "Sandalwood", type: "base" },
+      { name: "Musk", type: "base" }
+    ],
+    imageUrl: "/placeholder.svg",
+    size: "100ml",
+    inStock: true,
+    isNew: true,
+    isBestseller: false
+  },
+  {
+    id: "p16",
+    name: "Angel Veil",
+    brand: "Luxury Scents",
+    price: 1550,
+    description: "A heavenly floral fragrance as soft as angel wings. Delicate white flowers and powdery notes create an ethereal and pure aroma.",
+    scentFamily: "floral",
+    notes: [
+      { name: "White Lily", type: "top" },
+      { name: "Iris", type: "top" },
+      { name: "Jasmine", type: "heart" },
+      { name: "Orange Blossom", type: "heart" },
+      { name: "White Musk", type: "base" },
+      { name: "Vanilla", type: "base" }
+    ],
+    imageUrl: "/placeholder.svg",
+    size: "100ml",
+    inStock: true,
+    isNew: true,
+    isBestseller: false
   }
 ];
 
